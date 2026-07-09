@@ -60,3 +60,33 @@
   background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
   background-size: 3px 3px;
 }
+
+/* Hero ken-burns (langzame zoom) */
+.hero-kenburns {
+  animation: heroKenburns 26s ease-in-out infinite alternate;
+  will-change: transform;
+}
+@keyframes heroKenburns {
+  from { transform: scale(1.03); }
+  to { transform: scale(1.13); }
+}
+
+/* Reuze display-woord dat áchter de content valt (onderkant overlapt door de kaarten) */
+.display-word {
+  overflow: hidden;
+  line-height: 0.74;
+  user-select: none;
+  margin-bottom: clamp(-8rem, -6.5vw, -2rem);
+}
+.display-word span {
+  display: inline-block;
+  font-weight: 800;
+  letter-spacing: -0.06em;
+  color: var(--color-accent);
+  font-size: clamp(4.5rem, 16vw, 14rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-kenburns { animation: none; }
+  .hub-rise { animation: none; }
+}

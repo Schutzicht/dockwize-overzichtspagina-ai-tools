@@ -8,71 +8,65 @@ const cats = JSON.stringify(CATEGORIES);
 const statusLabels = JSON.stringify(STATUS_LABEL);
 ---
 <Base>
-  <!-- ================= HERO ================= -->
-  <header class="relative overflow-hidden bg-[var(--color-ink)] text-white">
-    <div class="hub-noise absolute inset-0 opacity-60"></div>
-    <div
-      class="pointer-events-none absolute -right-24 -top-40 h-[520px] w-[520px] rounded-full opacity-[0.14] blur-2xl"
-      style="background: radial-gradient(circle, var(--color-accent) 0%, transparent 62%)"
-    >
+  <!-- ================= HERO (fotohero, Dockwize-look) ================= -->
+  <header class="relative flex min-h-[86svh] flex-col overflow-hidden bg-[var(--color-ink)] text-white">
+    <img src="/images/hero.jpg" alt="Dockwize Get Unlocked event" class="hero-kenburns absolute inset-0 h-full w-full object-cover object-center" />
+    <div class="pointer-events-none absolute inset-0 bg-gradient-to-br from-[var(--color-ink)]/85 via-[var(--color-ink)]/45 to-[var(--color-ink)]/70"></div>
+    <div class="pointer-events-none absolute inset-x-0 bottom-0 h-52 bg-gradient-to-t from-[var(--color-ink)]/80 to-transparent"></div>
+
+    <!-- top bar -->
+    <div class="relative z-20 mx-auto flex w-full max-w-[1400px] items-center justify-between gap-4 px-6 pt-8 sm:px-10 lg:px-16">
+      <div class="flex items-center gap-2.5">
+        <DockwizeMark size={30} markColor="#ffda00" dotColor="#1d1d1b" />
+        <span class="text-[15px] font-bold tracking-tight">Dockwize</span>
+        <span class="hidden text-[13px] font-medium text-white/50 sm:inline">/ Toolkit</span>
+      </div>
+      <button
+        id="beheer-toggle"
+        class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/25 px-4 py-2 text-[13px] font-semibold text-white/90 backdrop-blur-xl transition hover:bg-black/40 active:scale-95"
+      >
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+        <span id="beheer-label">Beheer</span>
+      </button>
     </div>
-    <div class="pointer-events-none absolute -right-10 top-6 hidden lg:block">
-      <DockwizeMark size={340} markColor="#ffffff" dotColor="#1d1d1b" class="opacity-[0.04]" />
+
+    <!-- headline -->
+    <div class="relative z-20 mx-auto flex w-full max-w-[1400px] flex-1 flex-col justify-center px-6 py-16 sm:px-10 lg:px-16">
+      <div class="inline-flex w-fit items-center gap-2 rounded-full border border-white/20 bg-black/25 px-3.5 py-1.5 text-[12px] font-semibold uppercase tracking-[0.14em] text-white/80 backdrop-blur-md">
+        <span class="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]"></span>Dockwize toolkit
+      </div>
+      <h1 class="mt-6 max-w-3xl text-[clamp(2.9rem,6.4vw,5.2rem)] font-extrabold leading-[0.92] tracking-[-0.035em] [text-shadow:0_2px_28px_rgba(0,0,0,0.35)]">
+        Alles op<br />één plek.
+      </h1>
+      <p class="mt-6 max-w-xl text-[15px] leading-relaxed text-white/75 sm:text-base">
+        Elke tool, demo en app die voor Dockwize is gemaakt. Klik door naar wat je nodig hebt;
+        in het beheer voeg je zelf kaarten toe of pas je de status aan.
+      </p>
     </div>
 
-    <div class="relative mx-auto w-full max-w-[1200px] px-5 pb-10 pt-7 sm:px-8 sm:pb-14 sm:pt-9">
-      <!-- top bar -->
-      <div class="flex items-center justify-between gap-4">
-        <div class="flex items-center gap-2.5">
-          <DockwizeMark size={30} markColor="#ffda00" dotColor="#1d1d1b" />
-          <span class="text-[15px] font-bold tracking-tight">Dockwize</span>
-          <span class="hidden text-[13px] font-medium text-white/45 sm:inline">/ Toolkit</span>
+    <!-- onderbalk: stats + zoek + chips (frosted) -->
+    <div class="relative z-20 mx-auto w-full max-w-[1400px] px-6 pb-10 sm:px-10 lg:px-16">
+      <div class="rounded-[22px] border border-white/15 bg-black/25 p-4 backdrop-blur-xl sm:p-5">
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div id="stats" class="flex flex-wrap items-center gap-x-5 gap-y-2 text-[13px] font-medium text-white/70"></div>
+          <div class="relative w-full sm:max-w-xs">
+            <svg class="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-white/50" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+            <input
+              id="search"
+              type="text"
+              placeholder="Zoek een tool..."
+              class="w-full rounded-full border border-white/20 bg-white/10 py-2.5 pl-10 pr-4 text-sm text-white placeholder:text-white/50 outline-none transition focus:border-white/50 focus:bg-white/15"
+            />
+          </div>
         </div>
-        <button
-          id="beheer-toggle"
-          class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-2 text-[13px] font-semibold text-white/90 transition hover:bg-white/10"
-        >
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-          <span id="beheer-label">Beheer</span>
-        </button>
+        <div id="chips" class="mt-4 flex flex-wrap gap-2 border-t border-white/10 pt-4"></div>
       </div>
-
-      <!-- headline -->
-      <div class="mt-12 max-w-3xl sm:mt-16">
-        <div class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 text-[12px] font-semibold uppercase tracking-[0.14em] text-white/70">
-          <span class="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]"></span>Dockwize toolkit
-        </div>
-        <h1 class="mt-6 text-[2.9rem] font-semibold leading-[0.94] tracking-[-0.03em] sm:text-[4.6rem]">
-          Alles op<br />één plek.
-        </h1>
-        <p class="mt-6 max-w-xl text-[15px] leading-relaxed text-white/60 sm:text-base">
-          Elke tool, demo en app die voor Dockwize is gemaakt. Klik door naar wat je nodig hebt;
-          in het beheer voeg je zelf kaarten toe of pas je de status aan.
-        </p>
-      </div>
-
-      <!-- stats + search -->
-      <div class="mt-9 flex flex-col gap-4 sm:mt-11 sm:flex-row sm:items-center sm:justify-between">
-        <div id="stats" class="flex items-center gap-5 text-[13px] font-medium text-white/55"></div>
-        <div class="relative w-full sm:max-w-xs">
-          <svg class="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-white/40" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
-          <input
-            id="search"
-            type="text"
-            placeholder="Zoek een tool..."
-            class="w-full rounded-full border border-white/15 bg-white/5 py-2.5 pl-10 pr-4 text-sm text-white placeholder:text-white/40 outline-none transition focus:border-white/40 focus:bg-white/10"
-          />
-        </div>
-      </div>
-
-      <!-- filter chips -->
-      <div id="chips" class="mt-5 flex flex-wrap gap-2"></div>
     </div>
   </header>
 
   <!-- ================= BEHEER-BALK ================= -->
   <div id="beheerbar" class="sticky top-0 z-30 hidden border-b border-[var(--color-border)] bg-[var(--color-accent)]/95 backdrop-blur">
-    <div class="mx-auto flex w-full max-w-[1200px] flex-wrap items-center gap-2 px-5 py-2.5 sm:px-8">
+    <div class="mx-auto flex w-full max-w-[1400px] flex-wrap items-center gap-2 px-6 py-2.5 sm:px-10 lg:px-16">
       <span class="mr-1 text-[13px] font-bold text-[var(--color-ink)]">Beheer aan</span>
       <button data-act="add" class="rounded-full bg-[var(--color-ink)] px-3.5 py-1.5 text-[13px] font-semibold text-white transition hover:opacity-90">+ Nieuwe tool</button>
       <button data-act="export" class="rounded-full border border-[var(--color-ink)]/25 px-3.5 py-1.5 text-[13px] font-semibold text-[var(--color-ink)] transition hover:bg-[var(--color-ink)]/10">Exporteren</button>
@@ -82,13 +76,13 @@ const statusLabels = JSON.stringify(STATUS_LABEL);
   </div>
 
   <!-- ================= GRID ================= -->
-  <main class="mx-auto w-full max-w-[1200px] px-5 py-12 sm:px-8 sm:py-16">
+  <main class="mx-auto w-full max-w-[1400px] px-6 py-16 sm:px-10 sm:py-24 lg:px-16">
     <div id="grid"></div>
     <p id="empty" class="hidden py-20 text-center text-[15px] text-[var(--color-ink-3)]">Geen tools gevonden.</p>
   </main>
 
   <footer class="border-t border-[var(--color-border)] py-8">
-    <div class="mx-auto flex w-full max-w-[1200px] items-center justify-between px-5 sm:px-8">
+    <div class="mx-auto flex w-full max-w-[1400px] items-center justify-between px-6 sm:px-10 lg:px-16">
       <div class="flex items-center gap-2 text-[13px] text-[var(--color-ink-3)]">
         <DockwizeMark size={18} markColor="#1d1d1b" dotColor="#ffffff" />
         <span>Dockwize Toolkit</span>
@@ -220,10 +214,10 @@ const statusLabels = JSON.stringify(STATUS_LABEL);
 
       let footer;
       if (t.url) {
-        footer = `<span class="inline-flex items-center gap-1.5 text-[13px] font-semibold" style="color:var(--color-cta)">Openen
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"></path></svg></span>`;
+        footer = `<span class="inline-flex items-center gap-2 rounded-full bg-[var(--color-cta)] py-1.5 pl-2 pr-3.5 text-[12.5px] font-semibold text-white transition group-hover:brightness-110">
+          <span class="grid h-5 w-5 place-items-center rounded-full bg-white/20"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"></path></svg></span>Openen</span>`;
       } else {
-        footer = `<span class="text-[13px] font-medium text-[var(--color-muted)]">Geen live link</span>`;
+        footer = `<span class="inline-flex items-center gap-1.5 text-[12.5px] font-medium text-[var(--color-muted)]"><span class="h-1.5 w-1.5 rounded-full bg-[var(--color-border-strong)]"></span>Geen live link</span>`;
       }
 
       const admin = beheer
@@ -267,10 +261,12 @@ const statusLabels = JSON.stringify(STATUS_LABEL);
         const count = tools.filter((t) => t.category === cat).length;
         if (items.length) anyVisible = true;
 
-        html += `<section class="mb-14">
-          <div class="mb-6 flex items-baseline gap-3 border-b border-[var(--color-border)] pb-4">
-            <h2 class="lowercase text-[2rem] font-semibold leading-none tracking-[-0.03em] text-[var(--color-ink)] sm:text-[2.7rem]">${esc(cat)}</h2>
-            <span class="text-[15px] font-semibold text-[var(--color-cta)]">${count}</span>
+        const dword = esc(String(cat).split(/[\s&/]+/)[0].toLowerCase());
+        html += `<div class="display-word"><span>${dword}</span></div>
+        <section class="relative z-10 mb-16 sm:mb-24">
+          <div class="mb-6 flex items-baseline gap-3">
+            <h2 class="text-[13px] font-semibold uppercase tracking-[0.16em] text-[var(--color-ink-2)]">${esc(cat)}</h2>
+            <span class="text-[13px] font-bold text-[var(--color-cta)]">${count}</span>
           </div>
           <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             ${items.map((t, i) => cardHTML(t, i)).join('')}
