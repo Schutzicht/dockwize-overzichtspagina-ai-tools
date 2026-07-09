@@ -1,7 +1,8 @@
 @import 'tailwindcss';
 
 @theme {
-  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  /* Dockwize gebruikt Roboto (zoals dockwize.nl), met Black (900) voor zware koppen */
+  --font-sans: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
 
   --color-bg: #f6f6f4;
   --color-surface: #ffffff;
@@ -39,14 +40,6 @@
     color: var(--color-ink);
     font-family: var(--font-sans);
   }
-}
-
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-  src: url('https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2') format('woff2');
 }
 
 /* subtiele opkomst van kaarten */
