@@ -59,10 +59,10 @@ export const TOOLS: Tool[] = [
     title: 'AI-Kennisassistent',
     category: 'Software & tools',
     description:
-      'Chat-assistent op het leiderschaps- en groeiprogramma, met antwoorden uit de eigen kennisbank. Overgedragen door Nedbase; draait lokaal en wacht op de productie-koppeling.',
+      'Chat-assistent op het leiderschaps- en groeiprogramma, met antwoorden uit de eigen kennisbank. Draait lokaal en wacht op de productie-koppeling.',
     status: 'ontwikkeling',
     url: null,
-    meta: 'Van: Laurens (Nedbase) · lokaal',
+    meta: 'Van: Laurens · lokaal',
     tags: ['AI', 'Chat', 'Kennisbank'],
   },
   {
