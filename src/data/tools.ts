@@ -66,28 +66,6 @@ export const TOOLS: Tool[] = [
     tags: ['AI', 'Chat', 'Kennisbank'],
   },
   {
-    id: 'website-herbouw',
-    title: 'Website-herbouw (demo)',
-    category: 'Website & content',
-    description:
-      'Volledige na-bouw van de dockwize.nl-pagina’s in de nieuwe stijl: home, starten, community, faciliteiten en events. Onderdeel van de Kompas-demo.',
-    status: 'concept',
-    url: 'https://demo-dockwize-wizard.vercel.app',
-    meta: 'Multipage demo',
-    tags: ['Website', 'Design'],
-  },
-  {
-    id: 'programma-overzicht',
-    title: 'Programma-overzicht',
-    category: 'Website & content',
-    description:
-      'Overzichtspagina van alle Dockwize-programma’s per groeifase (Kickstart, Scale-up en meer), als los onderdeel opgezet.',
-    status: 'concept',
-    url: null,
-    meta: 'Lokaal · voor Pascal',
-    tags: ['Programma’s', 'Content'],
-  },
-  {
     id: '16-unlocked',
     title: '16 Years Unlocked',
     category: 'Events & campagne',
@@ -108,38 +86,5 @@ export const TOOLS: Tool[] = [
     url: null,
     meta: 'Opnames juli · PDF',
     tags: ['Video', 'Campagne', 'Script'],
-  },
-  {
-    id: 'sweet-sixteen-deck',
-    title: 'Sweet Sixteen validatiedeck',
-    category: 'Sessies & analyses',
-    description:
-      'A3 print-deck van zeven borden voor de validatiesessie van deelnemer Marnik de Haan: stickerbord, post-it muur en turflijst.',
-    status: 'intern',
-    url: null,
-    meta: 'PDF · A3 liggend',
-    tags: ['Print', 'Sessie'],
-  },
-  {
-    id: 'waterwijs',
-    title: 'Waterwijs Trendanalyse',
-    category: 'Sessies & analyses',
-    description:
-      'Trendanalyse voor de campings binnen Waterwijs: data per camping, presentatie-deck en notities voor de terugkoppeling.',
-    status: 'intern',
-    url: null,
-    meta: 'PPTX / PDF',
-    tags: ['Analyse', 'Camping'],
-  },
-  {
-    id: 'constructie-docs',
-    title: 'Constructie-documenten',
-    category: 'Sessies & analyses',
-    description:
-      'Gerenderde documenten in de Dockwize-huisstijl (Jorik en Marlon), opgebouwd uit een gedeelde databron.',
-    status: 'intern',
-    url: null,
-    meta: 'HTML naar PDF',
-    tags: ['Document'],
   },
 ];
