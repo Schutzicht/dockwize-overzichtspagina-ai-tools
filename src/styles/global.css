@@ -67,14 +67,15 @@
 /* Reuze display-woord dat áchter de content valt (onderkant overlapt door de kaarten) */
 .display-word {
   overflow: hidden;
-  line-height: 0.74;
   user-select: none;
-  margin-bottom: clamp(-8rem, -6.5vw, -2rem);
+  padding-top: clamp(0.8rem, 3vw, 2.7rem);
+  margin-bottom: clamp(-8.5rem, -7vw, -2.4rem);
 }
 .display-word span {
   display: inline-block;
-  font-weight: 900;
-  letter-spacing: -0.06em;
+  line-height: 0.82;
+  font-weight: 800;
+  letter-spacing: -0.015em;
   color: var(--color-accent);
   font-size: clamp(4.5rem, 16vw, 14rem);
 }
