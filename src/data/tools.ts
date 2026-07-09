@@ -66,6 +66,17 @@ export const TOOLS: Tool[] = [
     tags: ['AI', 'Chat', 'Kennisbank'],
   },
   {
+    id: 'programma-overzicht',
+    title: 'Programma-overzicht',
+    category: 'Software & tools',
+    description:
+      'Interactief overzicht van de twee Dockwize-programma’s: deelnames, sectoren in de APK-pijplijn en een kaart van heel Zeeland.',
+    status: 'live',
+    url: 'https://programma-dockwize.netlify.app',
+    meta: 'Voor Pascal',
+    tags: ['Programma’s', 'Dashboard', 'Kaart'],
+  },
+  {
     id: '16-unlocked',
     title: '16 Years Unlocked',
     category: 'Events & campagne',
