@@ -39,15 +39,15 @@ const statusLabels = JSON.stringify(STATUS_LABEL);
 
       <!-- headline -->
       <div class="mt-12 max-w-3xl sm:mt-16">
-        <div class="inline-flex items-center gap-2 rounded-full bg-[var(--color-accent)] px-3 py-1 text-[12px] font-bold uppercase tracking-wide text-[var(--color-ink)]">
-          Interne launchpad
+        <div class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 text-[12px] font-semibold uppercase tracking-[0.14em] text-white/70">
+          <span class="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]"></span>Dockwize toolkit
         </div>
-        <h1 class="mt-5 text-[2.6rem] font-extrabold leading-[0.98] tracking-tight sm:text-6xl">
-          Alles wat we voor<br />Dockwize bouwden.
+        <h1 class="mt-6 text-[2.9rem] font-semibold leading-[0.94] tracking-[-0.03em] sm:text-[4.6rem]">
+          Alles op<br />één plek.
         </h1>
-        <p class="mt-5 max-w-xl text-[15px] leading-relaxed text-white/60 sm:text-base">
-          Elk tool, elke demo en elk document op één plek. Klik door naar wat je nodig hebt.
-          In het beheer voeg je zelf kaarten toe of pas je de status aan.
+        <p class="mt-6 max-w-xl text-[15px] leading-relaxed text-white/60 sm:text-base">
+          Elke tool, demo en app die voor Dockwize is gemaakt. Klik door naar wat je nodig hebt;
+          in het beheer voeg je zelf kaarten toe of pas je de status aan.
         </p>
       </div>
 
@@ -267,10 +267,10 @@ const statusLabels = JSON.stringify(STATUS_LABEL);
         const count = tools.filter((t) => t.category === cat).length;
         if (items.length) anyVisible = true;
 
-        html += `<section class="mb-12">
-          <div class="mb-5 flex items-baseline gap-3">
-            <h2 class="text-[15px] font-bold uppercase tracking-wide text-[var(--color-ink)]">${esc(cat)}</h2>
-            <span class="text-[13px] font-medium text-[var(--color-muted)]">${count}</span>
+        html += `<section class="mb-14">
+          <div class="mb-6 flex items-baseline gap-3 border-b border-[var(--color-border)] pb-4">
+            <h2 class="lowercase text-[2rem] font-semibold leading-none tracking-[-0.03em] text-[var(--color-ink)] sm:text-[2.7rem]">${esc(cat)}</h2>
+            <span class="text-[15px] font-semibold text-[var(--color-cta)]">${count}</span>
           </div>
           <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             ${items.map((t, i) => cardHTML(t, i)).join('')}
