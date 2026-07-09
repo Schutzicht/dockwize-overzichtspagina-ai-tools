@@ -1,0 +1,486 @@
+---
+import Base from '../layouts/Base.astro';
+import DockwizeMark from '../components/DockwizeMark.astro';
+import { TOOLS, CATEGORIES, STATUS_LABEL } from '../data/tools.ts';
+
+const seed = JSON.stringify(TOOLS);
+const cats = JSON.stringify(CATEGORIES);
+const statusLabels = JSON.stringify(STATUS_LABEL);
+---
+<Base>
+  <!-- ================= HERO ================= -->
+  <header class="relative overflow-hidden bg-[var(--color-ink)] text-white">
+    <div class="hub-noise absolute inset-0 opacity-60"></div>
+    <div
+      class="pointer-events-none absolute -right-24 -top-40 h-[520px] w-[520px] rounded-full opacity-[0.14] blur-2xl"
+      style="background: radial-gradient(circle, var(--color-accent) 0%, transparent 62%)"
+    >
+    </div>
+    <div class="pointer-events-none absolute -right-10 top-6 hidden lg:block">
+      <DockwizeMark size={340} markColor="#ffffff" dotColor="#1d1d1b" class="opacity-[0.04]" />
+    </div>
+
+    <div class="relative mx-auto w-full max-w-[1200px] px-5 pb-10 pt-7 sm:px-8 sm:pb-14 sm:pt-9">
+      <!-- top bar -->
+      <div class="flex items-center justify-between gap-4">
+        <div class="flex items-center gap-2.5">
+          <DockwizeMark size={30} markColor="#ffda00" dotColor="#1d1d1b" />
+          <span class="text-[15px] font-bold tracking-tight">Dockwize</span>
+          <span class="hidden text-[13px] font-medium text-white/45 sm:inline">/ Toolkit</span>
+        </div>
+        <button
+          id="beheer-toggle"
+          class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-2 text-[13px] font-semibold text-white/90 transition hover:bg-white/10"
+        >
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+          <span id="beheer-label">Beheer</span>
+        </button>
+      </div>
+
+      <!-- headline -->
+      <div class="mt-12 max-w-3xl sm:mt-16">
+        <div class="inline-flex items-center gap-2 rounded-full bg-[var(--color-accent)] px-3 py-1 text-[12px] font-bold uppercase tracking-wide text-[var(--color-ink)]">
+          Interne launchpad
+        </div>
+        <h1 class="mt-5 text-[2.6rem] font-extrabold leading-[0.98] tracking-tight sm:text-6xl">
+          Alles wat we voor<br />Dockwize bouwden.
+        </h1>
+        <p class="mt-5 max-w-xl text-[15px] leading-relaxed text-white/60 sm:text-base">
+          Elk tool, elke demo en elk document op één plek. Klik door naar wat je nodig hebt.
+          In het beheer voeg je zelf kaarten toe of pas je de status aan.
+        </p>
+      </div>
+
+      <!-- stats + search -->
+      <div class="mt-9 flex flex-col gap-4 sm:mt-11 sm:flex-row sm:items-center sm:justify-between">
+        <div id="stats" class="flex items-center gap-5 text-[13px] font-medium text-white/55"></div>
+        <div class="relative w-full sm:max-w-xs">
+          <svg class="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-white/40" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+          <input
+            id="search"
+            type="text"
+            placeholder="Zoek een tool..."
+            class="w-full rounded-full border border-white/15 bg-white/5 py-2.5 pl-10 pr-4 text-sm text-white placeholder:text-white/40 outline-none transition focus:border-white/40 focus:bg-white/10"
+          />
+        </div>
+      </div>
+
+      <!-- filter chips -->
+      <div id="chips" class="mt-5 flex flex-wrap gap-2"></div>
+    </div>
+  </header>
+
+  <!-- ================= BEHEER-BALK ================= -->
+  <div id="beheerbar" class="sticky top-0 z-30 hidden border-b border-[var(--color-border)] bg-[var(--color-accent)]/95 backdrop-blur">
+    <div class="mx-auto flex w-full max-w-[1200px] flex-wrap items-center gap-2 px-5 py-2.5 sm:px-8">
+      <span class="mr-1 text-[13px] font-bold text-[var(--color-ink)]">Beheer aan</span>
+      <button data-act="add" class="rounded-full bg-[var(--color-ink)] px-3.5 py-1.5 text-[13px] font-semibold text-white transition hover:opacity-90">+ Nieuwe tool</button>
+      <button data-act="export" class="rounded-full border border-[var(--color-ink)]/25 px-3.5 py-1.5 text-[13px] font-semibold text-[var(--color-ink)] transition hover:bg-[var(--color-ink)]/10">Exporteren</button>
+      <button data-act="import" class="rounded-full border border-[var(--color-ink)]/25 px-3.5 py-1.5 text-[13px] font-semibold text-[var(--color-ink)] transition hover:bg-[var(--color-ink)]/10">Importeren</button>
+      <button data-act="reset" class="ml-auto rounded-full border border-[var(--color-ink)]/25 px-3.5 py-1.5 text-[13px] font-semibold text-[var(--color-ink)] transition hover:bg-[var(--color-ink)]/10">Reset</button>
+    </div>
+  </div>
+
+  <!-- ================= GRID ================= -->
+  <main class="mx-auto w-full max-w-[1200px] px-5 py-12 sm:px-8 sm:py-16">
+    <div id="grid"></div>
+    <p id="empty" class="hidden py-20 text-center text-[15px] text-[var(--color-ink-3)]">Geen tools gevonden.</p>
+  </main>
+
+  <footer class="border-t border-[var(--color-border)] py-8">
+    <div class="mx-auto flex w-full max-w-[1200px] items-center justify-between px-5 sm:px-8">
+      <div class="flex items-center gap-2 text-[13px] text-[var(--color-ink-3)]">
+        <DockwizeMark size={18} markColor="#1d1d1b" dotColor="#ffffff" />
+        <span>Dockwize Toolkit</span>
+      </div>
+      <span class="text-[12px] text-[var(--color-muted)]">Intern overzicht</span>
+    </div>
+  </footer>
+
+  <!-- ================= MODAL ================= -->
+  <div id="modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+    <div id="modal-backdrop" class="absolute inset-0 bg-[var(--color-ink)]/50 backdrop-blur-sm"></div>
+    <div class="relative max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-3xl bg-[var(--color-surface)] p-6 shadow-2xl sm:p-7">
+      <div class="mb-5 flex items-center justify-between">
+        <h2 id="modal-title" class="text-lg font-bold">Nieuwe tool</h2>
+        <button id="modal-close" class="rounded-full p-1 text-[var(--color-ink-3)] transition hover:bg-[var(--color-surface-2)]" aria-label="Sluiten">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"></path></svg>
+        </button>
+      </div>
+      <form id="tool-form" class="space-y-4">
+        <input type="hidden" name="id" />
+        <div>
+          <label class="mb-1 block text-[13px] font-semibold text-[var(--color-ink-2)]">Titel</label>
+          <input name="title" required class="w-full rounded-xl border border-[var(--color-border-strong)] bg-white px-3.5 py-2.5 text-sm outline-none focus:border-[var(--color-cta)]" />
+        </div>
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div>
+            <label class="mb-1 block text-[13px] font-semibold text-[var(--color-ink-2)]">Categorie</label>
+            <input name="category" list="cat-list" required class="w-full rounded-xl border border-[var(--color-border-strong)] bg-white px-3.5 py-2.5 text-sm outline-none focus:border-[var(--color-cta)]" />
+            <datalist id="cat-list"></datalist>
+          </div>
+          <div>
+            <label class="mb-1 block text-[13px] font-semibold text-[var(--color-ink-2)]">Status</label>
+            <select name="status" class="w-full rounded-xl border border-[var(--color-border-strong)] bg-white px-3.5 py-2.5 text-sm outline-none focus:border-[var(--color-cta)]">
+              <option value="live">Live</option>
+              <option value="ontwikkeling">In ontwikkeling</option>
+              <option value="concept">Concept</option>
+              <option value="intern">Intern / afgerond</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="mb-1 block text-[13px] font-semibold text-[var(--color-ink-2)]">Link (optioneel)</label>
+          <input name="url" type="url" placeholder="https://..." class="w-full rounded-xl border border-[var(--color-border-strong)] bg-white px-3.5 py-2.5 text-sm outline-none focus:border-[var(--color-cta)]" />
+        </div>
+        <div>
+          <label class="mb-1 block text-[13px] font-semibold text-[var(--color-ink-2)]">Omschrijving</label>
+          <textarea name="description" rows="3" class="w-full resize-none rounded-xl border border-[var(--color-border-strong)] bg-white px-3.5 py-2.5 text-sm outline-none focus:border-[var(--color-cta)]"></textarea>
+        </div>
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div>
+            <label class="mb-1 block text-[13px] font-semibold text-[var(--color-ink-2)]">Onder-tekst</label>
+            <input name="meta" placeholder="bv. eigenaar of stack" class="w-full rounded-xl border border-[var(--color-border-strong)] bg-white px-3.5 py-2.5 text-sm outline-none focus:border-[var(--color-cta)]" />
+          </div>
+          <div>
+            <label class="mb-1 block text-[13px] font-semibold text-[var(--color-ink-2)]">Tags</label>
+            <input name="tags" placeholder="komma, gescheiden" class="w-full rounded-xl border border-[var(--color-border-strong)] bg-white px-3.5 py-2.5 text-sm outline-none focus:border-[var(--color-cta)]" />
+          </div>
+        </div>
+        <div class="flex items-center gap-3 pt-2">
+          <button type="submit" class="flex-1 rounded-full bg-[var(--color-cta)] px-4 py-2.5 text-sm font-semibold text-white transition hover:opacity-90">Opslaan</button>
+          <button type="button" id="modal-delete" class="hidden rounded-full border border-[var(--color-danger,#dc2626)]/30 px-4 py-2.5 text-sm font-semibold text-[#dc2626] transition hover:bg-[#dc2626]/10">Verwijderen</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <textarea id="io-buffer" class="hidden"></textarea>
+
+  <script is:inline define:vars={{ seed, cats, statusLabels }}>
+    const SEED = JSON.parse(seed);
+    const CATEGORIES = JSON.parse(cats);
+    const STATUS_LABEL = JSON.parse(statusLabels);
+    const KEY = 'dockwize_hub_v1';
+
+    const STATUS_STYLE = {
+      live: { bg: 'var(--color-live-soft)', fg: 'var(--color-live)', dot: 'var(--color-live)' },
+      ontwikkeling: { bg: 'var(--color-dev-soft)', fg: 'var(--color-dev)', dot: 'var(--color-dev)' },
+      concept: { bg: 'var(--color-concept-soft)', fg: 'var(--color-concept)', dot: 'var(--color-concept)' },
+      intern: { bg: 'var(--color-intern-soft)', fg: 'var(--color-intern)', dot: 'var(--color-intern)' },
+    };
+
+    let tools = load();
+    let beheer = false;
+    let activeCat = 'alles';
+    let query = '';
+
+    function load() {
+      try {
+        const raw = localStorage.getItem(KEY);
+        if (raw) return JSON.parse(raw);
+      } catch (e) {}
+      return structuredClone(SEED);
+    }
+    function persist() {
+      try { localStorage.setItem(KEY, JSON.stringify(tools)); } catch (e) {}
+    }
+    function uid() {
+      return 't' + Math.abs(Date.now() % 1e7).toString(36) + Math.floor(performance.now() % 1000).toString(36);
+    }
+    function esc(s) {
+      return String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+    function orderedCategories() {
+      const present = [...new Set(tools.map((t) => t.category))];
+      const ordered = CATEGORIES.filter((c) => present.includes(c));
+      const extra = present.filter((c) => !CATEGORIES.includes(c));
+      return [...ordered, ...extra];
+    }
+
+    // -------- render --------
+    const grid = document.getElementById('grid');
+    const emptyEl = document.getElementById('empty');
+
+    function matches(t) {
+      if (activeCat !== 'alles' && t.category !== activeCat) return false;
+      if (query) {
+        const hay = (t.title + ' ' + t.description + ' ' + (t.tags || []).join(' ') + ' ' + (t.meta || '')).toLowerCase();
+        if (!hay.includes(query)) return false;
+      }
+      return true;
+    }
+
+    function cardHTML(t, idx) {
+      const st = STATUS_STYLE[t.status] || STATUS_STYLE.concept;
+      const clickable = !beheer && t.url;
+      const tag = clickable ? 'a' : 'div';
+      const attrs = clickable ? `href="${esc(t.url)}" target="_blank" rel="noopener"` : '';
+      const tags = (t.tags || []).map((x) => `<span class="rounded-full bg-[var(--color-surface-2)] px-2.5 py-0.5 text-[11px] font-medium text-[var(--color-ink-3)]">${esc(x)}</span>`).join('');
+
+      let footer;
+      if (t.url) {
+        footer = `<span class="inline-flex items-center gap-1.5 text-[13px] font-semibold" style="color:var(--color-cta)">Openen
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"></path></svg></span>`;
+      } else {
+        footer = `<span class="text-[13px] font-medium text-[var(--color-muted)]">Geen live link</span>`;
+      }
+
+      const admin = beheer
+        ? `<div class="mt-4 flex items-center gap-1.5 border-t border-[var(--color-border)] pt-3">
+            <button data-edit="${esc(t.id)}" class="inline-flex items-center gap-1.5 rounded-lg bg-[var(--color-surface-2)] px-2.5 py-1.5 text-[12px] font-semibold text-[var(--color-ink-2)] transition hover:bg-[var(--color-border)]">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg>
+              Bewerken</button>
+            <button data-move="up" data-id="${esc(t.id)}" class="rounded-lg bg-[var(--color-surface-2)] p-1.5 text-[var(--color-ink-2)] transition hover:bg-[var(--color-border)]" aria-label="Omhoog">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"></path></svg></button>
+            <button data-move="down" data-id="${esc(t.id)}" class="rounded-lg bg-[var(--color-surface-2)] p-1.5 text-[var(--color-ink-2)] transition hover:bg-[var(--color-border)]" aria-label="Omlaag">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></button>
+          </div>`
+        : '';
+
+      return `<${tag} ${attrs} data-card="${esc(t.id)}"
+        class="hub-rise group flex flex-col rounded-[22px] border border-[var(--color-border)] bg-[var(--color-surface)] p-6 transition duration-200 ${clickable ? 'cursor-pointer hover:-translate-y-1 hover:border-[var(--color-border-strong)] hover:shadow-[0_18px_40px_-20px_rgba(29,29,27,0.28)]' : ''}"
+        style="animation-delay:${Math.min(idx * 45, 400)}ms">
+        <div class="flex items-start justify-between gap-3">
+          <span class="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11.5px] font-bold" style="background:${st.bg};color:${st.fg}">
+            <span class="h-1.5 w-1.5 rounded-full" style="background:${st.dot}"></span>${esc(STATUS_LABEL[t.status] || t.status)}</span>
+        </div>
+        <h3 class="mt-4 text-[19px] font-bold leading-snug tracking-tight text-[var(--color-ink)]">${esc(t.title)}</h3>
+        <p class="mt-2 flex-1 text-[13.5px] leading-relaxed text-[var(--color-ink-2)]">${esc(t.description)}</p>
+        ${tags ? `<div class="mt-4 flex flex-wrap gap-1.5">${tags}</div>` : ''}
+        <div class="mt-5 flex items-center justify-between gap-3">
+          <span class="truncate text-[12.5px] text-[var(--color-ink-3)]">${esc(t.meta || '')}</span>
+          ${footer}
+        </div>
+        ${admin}
+      </${tag}>`;
+    }
+
+    function render() {
+      const catsList = orderedCategories();
+      let html = '';
+      let anyVisible = false;
+
+      for (const cat of catsList) {
+        const items = tools.filter((t) => t.category === cat && matches(t));
+        if (items.length === 0 && !(beheer && (activeCat === 'alles' || activeCat === cat))) continue;
+        const count = tools.filter((t) => t.category === cat).length;
+        if (items.length) anyVisible = true;
+
+        html += `<section class="mb-12">
+          <div class="mb-5 flex items-baseline gap-3">
+            <h2 class="text-[15px] font-bold uppercase tracking-wide text-[var(--color-ink)]">${esc(cat)}</h2>
+            <span class="text-[13px] font-medium text-[var(--color-muted)]">${count}</span>
+          </div>
+          <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            ${items.map((t, i) => cardHTML(t, i)).join('')}
+            ${beheer ? addTileHTML(cat) : ''}
+          </div>
+        </section>`;
+      }
+
+      grid.innerHTML = html;
+      emptyEl.classList.toggle('hidden', anyVisible || beheer);
+      renderStats();
+    }
+
+    function addTileHTML(cat) {
+      return `<button data-addcat="${esc(cat)}" class="flex min-h-[180px] flex-col items-center justify-center gap-2 rounded-[22px] border-2 border-dashed border-[var(--color-border-strong)] p-6 text-[var(--color-ink-3)] transition hover:border-[var(--color-cta)] hover:text-[var(--color-cta)]">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
+        <span class="text-[13px] font-semibold">Tool toevoegen</span>
+      </button>`;
+    }
+
+    function renderStats() {
+      const total = tools.length;
+      const live = tools.filter((t) => t.status === 'live').length;
+      const dev = tools.filter((t) => t.status === 'ontwikkeling').length;
+      document.getElementById('stats').innerHTML =
+        `<span class="text-white/85"><b class="text-white">${total}</b> tools</span>
+         <span class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full" style="background:var(--color-live)"></span>${live} live</span>
+         <span class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full" style="background:var(--color-dev)"></span>${dev} in ontwikkeling</span>`;
+    }
+
+    // -------- chips --------
+    function renderChips() {
+      const chips = ['alles', ...orderedCategories()];
+      document.getElementById('chips').innerHTML = chips
+        .map((c) => {
+          const on = c === activeCat;
+          const label = c === 'alles' ? 'Alles' : c;
+          return `<button data-chip="${esc(c)}" class="rounded-full px-3.5 py-1.5 text-[13px] font-semibold transition ${on ? 'bg-[var(--color-accent)] text-[var(--color-ink)]' : 'border border-white/15 text-white/70 hover:bg-white/10'}">${esc(label)}</button>`;
+        })
+        .join('');
+    }
+
+    // -------- modal --------
+    const modal = document.getElementById('modal');
+    const form = document.getElementById('tool-form');
+    const modalTitle = document.getElementById('modal-title');
+    const modalDelete = document.getElementById('modal-delete');
+
+    function fillCatList() {
+      document.getElementById('cat-list').innerHTML = orderedCategories().map((c) => `<option value="${esc(c)}"></option>`).join('');
+    }
+
+    function openModal(tool, presetCat) {
+      fillCatList();
+      form.reset();
+      if (tool) {
+        modalTitle.textContent = 'Tool bewerken';
+        modalDelete.classList.remove('hidden');
+        form.id.value = tool.id;
+        form.title.value = tool.title || '';
+        form.category.value = tool.category || '';
+        form.status.value = tool.status || 'concept';
+        form.url.value = tool.url || '';
+        form.description.value = tool.description || '';
+        form.meta.value = tool.meta || '';
+        form.tags.value = (tool.tags || []).join(', ');
+      } else {
+        modalTitle.textContent = 'Nieuwe tool';
+        modalDelete.classList.add('hidden');
+        form.id.value = '';
+        form.category.value = presetCat && presetCat !== 'alles' ? presetCat : (CATEGORIES[0] || '');
+        form.status.value = 'concept';
+      }
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      setTimeout(() => form.title.focus(), 30);
+    }
+    function closeModal() {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = {
+        title: form.title.value.trim(),
+        category: form.category.value.trim() || (CATEGORIES[0] || 'Overig'),
+        status: form.status.value,
+        url: form.url.value.trim() || null,
+        description: form.description.value.trim(),
+        meta: form.meta.value.trim(),
+        tags: form.tags.value.split(',').map((s) => s.trim()).filter(Boolean),
+      };
+      if (!data.title) return;
+      const id = form.id.value;
+      if (id) {
+        const i = tools.findIndex((t) => t.id === id);
+        if (i > -1) tools[i] = { ...tools[i], ...data };
+      } else {
+        tools.push({ id: uid(), ...data });
+      }
+      persist();
+      closeModal();
+      renderChips();
+      render();
+    });
+
+    modalDelete.addEventListener('click', () => {
+      const id = form.id.value;
+      if (!id) return;
+      if (!confirm('Deze tool verwijderen?')) return;
+      tools = tools.filter((t) => t.id !== id);
+      persist();
+      closeModal();
+      renderChips();
+      render();
+    });
+
+    document.getElementById('modal-close').addEventListener('click', closeModal);
+    document.getElementById('modal-backdrop').addEventListener('click', closeModal);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+    // -------- events (delegation) --------
+    grid.addEventListener('click', (e) => {
+      const edit = e.target.closest('[data-edit]');
+      if (edit) { e.preventDefault(); const t = tools.find((x) => x.id === edit.dataset.edit); if (t) openModal(t); return; }
+      const mv = e.target.closest('[data-move]');
+      if (mv) { e.preventDefault(); move(mv.dataset.id, mv.dataset.move); return; }
+      const add = e.target.closest('[data-addcat]');
+      if (add) { e.preventDefault(); openModal(null, add.dataset.addcat); return; }
+    });
+
+    function move(id, dir) {
+      const i = tools.findIndex((t) => t.id === id);
+      if (i < 0) return;
+      const cat = tools[i].category;
+      // vind buur binnen dezelfde categorie
+      let j = dir === 'up' ? i - 1 : i + 1;
+      while (j >= 0 && j < tools.length && tools[j].category !== cat) j += dir === 'up' ? -1 : 1;
+      if (j < 0 || j >= tools.length) return;
+      const [item] = tools.splice(i, 1);
+      tools.splice(j, 0, item);
+      persist();
+      render();
+    }
+
+    document.getElementById('chips').addEventListener('click', (e) => {
+      const chip = e.target.closest('[data-chip]');
+      if (!chip) return;
+      activeCat = chip.dataset.chip;
+      renderChips();
+      render();
+    });
+
+    document.getElementById('search').addEventListener('input', (e) => {
+      query = e.target.value.trim().toLowerCase();
+      render();
+    });
+
+    // -------- beheer toggle + toolbar --------
+    const beheerBar = document.getElementById('beheerbar');
+    document.getElementById('beheer-toggle').addEventListener('click', () => {
+      beheer = !beheer;
+      document.getElementById('beheer-label').textContent = beheer ? 'Klaar' : 'Beheer';
+      beheerBar.classList.toggle('hidden', !beheer);
+      render();
+    });
+
+    beheerBar.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-act]');
+      if (!btn) return;
+      const act = btn.dataset.act;
+      if (act === 'add') openModal(null, activeCat);
+      else if (act === 'export') doExport();
+      else if (act === 'import') doImport();
+      else if (act === 'reset') {
+        if (confirm('Alles terugzetten naar de standaardlijst? Je eigen wijzigingen gaan verloren.')) {
+          tools = structuredClone(SEED);
+          persist();
+          renderChips();
+          render();
+        }
+      }
+    });
+
+    function doExport() {
+      const text = JSON.stringify(tools, null, 2);
+      navigator.clipboard?.writeText(text).then(
+        () => alert('De volledige lijst is als JSON naar je klembord gekopieerd. Plak deze in src/data/tools.ts om het voor iedereen vast te leggen.'),
+        () => prompt('Kopieer de JSON:', text)
+      );
+    }
+    function doImport() {
+      const text = prompt('Plak hier de JSON-lijst:');
+      if (!text) return;
+      try {
+        const parsed = JSON.parse(text);
+        if (!Array.isArray(parsed)) throw new Error();
+        tools = parsed.map((t) => ({ id: t.id || uid(), ...t }));
+        persist();
+        renderChips();
+        render();
+        alert('Geïmporteerd.');
+      } catch (e) {
+        alert('Dat is geen geldige JSON-lijst.');
+      }
+    }
+
+    // init
+    renderChips();
+    render();
+  </script>
+</Base>

@@ -1,0 +1,62 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+  --color-bg: #f6f6f4;
+  --color-surface: #ffffff;
+  --color-surface-2: #f4f4f3;
+  --color-border: #e7e7e4;
+  --color-border-strong: #d6d6d2;
+  --color-ink: #1d1d1b;
+  --color-ink-2: #4a4a48;
+  --color-ink-3: #75756f;
+  --color-muted: #9b9b95;
+
+  --color-accent: #ffda00;
+  --color-accent-soft: #fff4b8;
+  --color-cta: #6c4cf1;
+  --color-cta-ink: #ffffff;
+
+  --color-live: #16a34a;
+  --color-live-soft: #dcfce7;
+  --color-dev: #d97706;
+  --color-dev-soft: #fef3c7;
+  --color-concept: #6c4cf1;
+  --color-concept-soft: #ece7ff;
+  --color-intern: #64748b;
+  --color-intern-soft: #eef1f5;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+  body {
+    background: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+  }
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2') format('woff2');
+}
+
+/* subtiele opkomst van kaarten */
+@keyframes hub-rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+.hub-rise { animation: hub-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+.hub-noise {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 3px 3px;
+}
