@@ -33,6 +33,17 @@ export const STATUS_LABEL: Record<Status, string> = {
 
 export const TOOLS: Tool[] = [
   {
+    id: 'vulwerk',
+    title: 'Website-werkbord',
+    category: 'Software & tools',
+    description:
+      'Gedeeld werkbord voor het vullen van de nieuwe Dockwize-website: elk kaartje is iets dat af moet, nagekeken wordt of aangeleverd moet worden. Het team reageert en wijst toe, opgeslagen in Supabase.',
+    status: 'live',
+    url: 'https://dockwize-vulwerk.vercel.app',
+    meta: 'Voor het team · Supabase',
+    tags: ['Werkbord', 'Samenwerken', 'Website'],
+  },
+  {
     id: 'kompas',
     title: 'Dockwize Kompas',
     category: 'Software & tools',
